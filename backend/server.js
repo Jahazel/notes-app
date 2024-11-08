@@ -1,6 +1,7 @@
-require("dotenv").config();
 const express = require("express");
+const mongoose = require("mongoose");
 const userRoutes = require("./routes/user");
+require("dotenv").config();
 
 //express app
 const app = express();
@@ -16,11 +17,15 @@ app.use((req, res, next) => {
 //routes
 app.use("/api/user", userRoutes);
 
-app.get("/", (req, res) => {
-  res.send("Hello World!");
-});
-
-//listen for requests
-app.listen(process.env.PORT, () => {
-  console.log("Server running on", process.env.PORT);
-});
+//connect to mongodb
+mongoose
+  .connect(process.env.MONGODB_URI)
+  .then(() => {
+    app.listen(process.env.PORT || 3000, () => {
+      console.log(
+        "Connected to mongodb and server running on port",
+        process.env.PORT
+      );
+    });
+  })
+  .catch((error) => console.error("MongoDB connection error or server error:", error));
