@@ -1,9 +1,8 @@
 const express = require("express");
-const mongoose = require("mongoose");
-const userRoutes = require("./routes/user");
+const connectDB = require("./config/db");
+const authRoutes = require("./routes/authRoutes");
 require("dotenv").config();
 
-//express app
 const app = express();
 
 //middleware
@@ -15,17 +14,12 @@ app.use((req, res, next) => {
 });
 
 //routes
-app.use("/api/user", userRoutes);
+app.use("/api/auth", authRoutes);
 
 //connect to mongodb
-mongoose
-  .connect(process.env.MONGODB_URI)
-  .then(() => {
-    app.listen(process.env.PORT || 3000, () => {
-      console.log(
-        "Connected to mongodb and server running on port",
-        process.env.PORT
-      );
-    });
-  })
-  .catch((error) => console.error("MongoDB connection error or server error:", error));
+connectDB();
+
+//start server
+app.listen(process.env.PORT || 3000, () => {
+  console.log("Server running on port", process.env.PORT);
+});
