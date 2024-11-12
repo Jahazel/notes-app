@@ -5,27 +5,36 @@ const loginUser = async (req, res) => {
   res.send("login user");
 };
 
-//signup user
-const signupUser = async (req, res) => {
+//regsiter user
+const registgerUser = async (req, res) => {
   const { name, email, password } = req.body;
+  const existingUser = await User.findOne({ email });
+
+  // if missing fields
+  if (!email || !password || !name) {
+    return res.status(400).json({ message: "Please provide all fields" });
+  }
+
+  //if user exists
+  if (existingUser) {
+    return res.status(400).json({ message: "User already exists" });
+  }
 
   try {
-    const existingUser = await User.findOne({ email });
-
-    if (existingUser) {
-      return res.status(400).json({ message: "User already exists" });
-    }
-
+    //create new user
     const newUser = new User({ name, email, password });
     await newUser.save();
 
     res.status(201).json({ message: "User registered successfully" });
   } catch (error) {
-    res.status(500).json({ message: "Error registering user", error });
+    console.error("Error during registration:", error);
+    res
+      .status(400)
+      .json({ message: "Error registering user", error: error.message });
   }
 };
 
 module.exports = {
-  signupUser,
+  registgerUser,
   loginUser,
 };
