@@ -1,15 +1,17 @@
 import React from "react";
 import Nav from "../components/Nav";
+import { useSignup } from "../hooks/useSignup";
 
 export const Signup = () => {
   const [name, setName] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const { signup, loading, error } = useSignup();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(email, password);
+    await signup(name, email, password);
   };
 
   return (
@@ -40,9 +42,18 @@ export const Signup = () => {
               onChange={(e) => setPassword(e.target.value)}
               value={password}
             />
-            <button type="submit" className="p-2 mb-4 bg-blue-500 text-white">
+            <button
+              type="submit"
+              className="p-2 mb-4 bg-blue-500 text-white"
+              disabled={loading}
+            >
               Sign up
             </button>
+            {error && (
+              <div className="text-xs" role="alert">
+                {error}
+              </div>
+            )}
           </form>
         </div>
       </div>
