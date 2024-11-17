@@ -11,14 +11,14 @@ const loginUser = async (req, res) => {
 
   // if missing fields
   if (!email || !password) {
-    return res.status(400).json({ message: "Please provide all fields" });
+    return res.status(400).json({ error: "Please provide all fields" });
   }
 
   try {
     //if user exisists
     const newUser = await User.findOne({ email });
     if (!newUser) {
-      return res.status(400).json({ message: "User not found" });
+      return res.status(400).json({ error: "User not found" });
     }
 
     //compare password with hashed password in database
@@ -38,18 +38,18 @@ const loginUser = async (req, res) => {
 };
 
 //regsiter user
-const registgerUser = async (req, res) => {
+const registerUser = async (req, res) => {
   const { name, email, password } = req.body;
   const existingUser = await User.findOne({ email });
 
   // if missing fields
-  if (!email || !password || !name) {
-    return res.status(400).json({ message: "Please provide all fields" });
+  if (!name || !email || !password) {
+    return res.status(400).json({ error: "Please provide all fields" });
   }
 
   //if user exists
   if (existingUser) {
-    return res.status(400).json({ message: "User already exists" });
+    return res.status(400).json({ error: "User already exists" });
   }
 
   try {
@@ -70,6 +70,6 @@ const registgerUser = async (req, res) => {
 };
 
 module.exports = {
-  registgerUser,
+  registerUser,
   loginUser,
 };

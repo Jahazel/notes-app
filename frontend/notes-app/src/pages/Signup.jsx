@@ -57,9 +57,7 @@ export const Signup = () => {
                 {Array.isArray(error) ? (
                   <ul>
                     {error.map((err, index) => {
-                      <li className="text-red-500" key={index}>
-                        {err}
-                      </li>;
+                      <li key={index}>{err}</li>;
                     })}
                   </ul>
                 ) : (

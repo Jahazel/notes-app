@@ -25,15 +25,15 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
       minlength: [8, "Password must be at least 8 characters long"],
-      maxlength: [128, "Password must be less than 128 characters long"],
+      maxlength: [128],
       validate: {
         validator: function (value) {
           const regex =
-            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_\-+={}[\]\\|:;'",.<>?/~`])[a-zA-Z\d!@#$%^&*()_\-+={}[\]\\|:;'",.<>?/~`]{8,}$/;
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_\-+={}[\]\\|:;'",.<>?/~`])[a-zA-Z\d!@#$%^&*()_\-+={}[\]\\|:;'",.<>?/~`]{8,}$/;
           return regex.test(value);
         },
         message:
-          "Password must contain at least one uppercase letter, one lowercase letter, one special character, and one number",
+          "Password must include at least 8 characters, an uppercase letter, and a special character.",
       },
     },
     loginCount: {
