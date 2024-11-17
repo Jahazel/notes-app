@@ -1,9 +1,12 @@
 const express = require("express");
 const connectDB = require("./config/db");
 const authRoutes = require("./routes/authRoutes");
+const cors = require("cors");
 require("dotenv").config();
 
 const app = express();
+
+app.use(cors({ origin: "http://localhost:5173" }));
 
 //middleware
 app.use(express.json());

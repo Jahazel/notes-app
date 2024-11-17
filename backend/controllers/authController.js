@@ -11,7 +11,7 @@ const loginUser = async (req, res) => {
 
   // if missing fields
   if (!email || !password) {
-    return res.status(400).json({ message: "Please provide all fiels" });
+    return res.status(400).json({ message: "Please provide all fields" });
   }
 
   try {
@@ -60,7 +60,7 @@ const registgerUser = async (req, res) => {
     //create token
     const token = createToken(newUser._id);
 
-    res.status(201).json({ email, token });
+    res.status(201).json({ name, email, token });
   } catch (error) {
     console.error("Error during registration:", error);
     res
