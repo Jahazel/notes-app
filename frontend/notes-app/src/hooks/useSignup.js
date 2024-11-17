@@ -21,7 +21,7 @@ export const useSignup = () => {
 
       if (!response.ok) {
         setLoading(false);
-        setError(json.error);
+        setError(json.errors ? json.errors.join(","): json.error);
       } else {
         // save user to local storage
         localStorage.setItem("user", JSON.stringify(json));
@@ -32,7 +32,12 @@ export const useSignup = () => {
         setLoading(false);
       }
     } catch (error) {
-      console.error("Error logging in:", error);
+      if (error.name === "ValidationError") {
+        const messages = Object.values(error.errors).map((err) => err.message);
+
+        return res.status(400).json({ errors: messages });
+      }
+      res.status(500).json({ error: "Internal server error" });
       setLoading(false);
     }
   };

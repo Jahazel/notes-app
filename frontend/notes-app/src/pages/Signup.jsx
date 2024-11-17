@@ -50,8 +50,21 @@ export const Signup = () => {
               Sign up
             </button>
             {error && (
-              <div className="text-xs" role="alert">
-                {error}
+              <div
+                className="bg-orange-100 border-l-4 border-orange-500 text-orange-700 p-4 text-xs"
+                role="alert"
+              >
+                {Array.isArray(error) ? (
+                  <ul>
+                    {error.map((err, index) => {
+                      <li className="text-red-500" key={index}>
+                        {err}
+                      </li>;
+                    })}
+                  </ul>
+                ) : (
+                  <p>{error}</p>
+                )}
               </div>
             )}
           </form>
