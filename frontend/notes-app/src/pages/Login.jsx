@@ -1,14 +1,20 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Nav from "../components/Nav";
+import { useLogin } from "../hooks/useLogin";
 
 const Login = () => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const { login, loading, error } = useLogin();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(email, password);
+  };
+
+  const handleClick = async (e) => {
+    await login(email, password);
   };
 
   return (
@@ -32,9 +38,30 @@ const Login = () => {
               onChange={(e) => setPassword(e.target.value)}
               value={password}
             />
-            <button type="submit" className="p-2 mb-4 bg-blue-500 text-white">
+            <button
+              type="submit"
+              className="p-2 mb-4 bg-blue-500 text-white"
+              onClick={handleClick}
+              disabled={loading}
+            >
               Login
             </button>
+            {error && (
+              <div
+                className="bg-orange-100 border-l-4 border-orange-500 text-orange-700 p-4 text-xs mb-1"
+                role="alert"
+              >
+                {Array.isArray(error) ? (
+                  <ul>
+                    {error.map((err, index) => {
+                      <li key={index}>{err}</li>;
+                    })}
+                  </ul>
+                ) : (
+                  <p>{error}</p>
+                )}
+              </div>
+            )}
             <p className="flex justify-center mt-1 text-sm">
               Not registered yet?
               <Link

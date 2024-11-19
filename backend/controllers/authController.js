@@ -25,15 +25,17 @@ const loginUser = async (req, res) => {
     const isMatch = await newUser.comparePassword(password);
 
     if (!isMatch) {
-      return res.status(400).json({ message: "Incorrect password" });
+      return res.status(400).json({ error: "Incorrect password" });
     }
 
     //create token
     const token = createToken(newUser._id);
     res.status(201).json({ email, token });
   } catch (error) {
-    console.error("Error logging in:", error);
-    res.status(400).json({ message: "Error logging in", error: error.message });
+    console.error("Error during registration:", error);
+    res
+      .status(400)
+      .json({ message: "Error registering user", error: error.message });
   }
 };
 
