@@ -1,6 +1,6 @@
 // createContext is used to share auth data across components
 // useReducer is used to manage state updates
-import { createContext, useReducer } from "react";
+import { createContext, useReducer, useEffect } from "react";
 
 // Create a context to store and share auth data
 export const AuthContext = createContext();
@@ -22,6 +22,14 @@ export const AuthContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, {
     user: null,
   });
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user"));
+
+    if (user) {
+      dispatch({ type: "LOGIN", payload: user });
+    }
+  }, []);
 
   console.log("Current state: ", state);
 
