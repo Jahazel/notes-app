@@ -12,6 +12,9 @@ export const Signup = () => {
     e.preventDefault();
 
     await signup(name, email, password);
+    setName("");
+    setEmail("");
+    setPassword("");
   };
 
   return (

@@ -10,11 +10,10 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(email, password);
-  };
-
-  const handleClick = async (e) => {
+    
     await login(email, password);
+    setEmail("");
+    setPassword("");
   };
 
   return (
@@ -41,7 +40,6 @@ const Login = () => {
             <button
               type="submit"
               className="p-2 mb-4 bg-blue-500 text-white"
-              onClick={handleClick}
               disabled={loading}
             >
               Login
