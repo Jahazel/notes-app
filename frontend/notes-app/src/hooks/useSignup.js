@@ -1,10 +1,12 @@
 import { useAuthContext } from "./useAuthContext";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const useSignup = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(null);
   const { dispatch } = useAuthContext();
+  const navigate = useNavigate();
 
   const signup = async (name, email, password) => {
     setLoading(true);
@@ -21,7 +23,7 @@ export const useSignup = () => {
 
       if (!response.ok) {
         setLoading(false);
-        setError(json.errors ? json.errors.join(","): json.error);
+        setError(json.errors ? json.errors.join(",") : json.error);
       } else {
         // save user to local storage
         localStorage.setItem("user", JSON.stringify(json));
@@ -30,6 +32,9 @@ export const useSignup = () => {
         dispatch({ type: "LOGIN", payload: json });
 
         setLoading(false);
+
+        // redirect to dashboard page
+        navigate("/dashboard");
       }
     } catch (error) {
       if (error.name === "ValidationError") {

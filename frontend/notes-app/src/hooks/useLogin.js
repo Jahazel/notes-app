@@ -1,10 +1,12 @@
 import { useAuthContext } from "./useAuthContext";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const useLogin = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(null);
   const { dispatch } = useAuthContext();
+  const navigate = useNavigate();
 
   const login = async (email, password) => {
     setLoading(true);
@@ -28,8 +30,10 @@ export const useLogin = () => {
 
         //update auth context
         dispatch({ type: "LOGIN", payload: json });
-
         setLoading(false);
+
+        //redirect to dashboard page
+        navigate("/dashboard");
       }
     } catch (error) {
       if (error.name === "ValidationError") {
