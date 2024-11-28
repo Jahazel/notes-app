@@ -5,7 +5,8 @@ const Note = require("../models/notesModel");
 const createNote = async (req, res) => {
   const { title, content, userId } = req.body;
 
-  if (!title || !content || !userId) {
+  if (!title || !userId) {
+    console.log(title, userId);
     return res.status(400).json({ error: "Please provide all fields" });
   }
 

@@ -5,10 +5,9 @@ export const useCreateNote = () => {
   const [loading, setLoading] = useState(false);
 
   const createNote = async (title, content, userId) => {
-    console.log({ title, content, userId });
-
     setLoading(true);
     setError(null);
+    
     try {
       const response = await fetch("http://localhost:4000/api/notes/create", {
         method: "POST",

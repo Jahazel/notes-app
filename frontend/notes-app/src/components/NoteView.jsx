@@ -2,18 +2,19 @@ import { useState } from "react";
 import { useCreateNote } from "../hooks/useCreateNote";
 import { jwtDecode } from "jwt-decode";
 
-const NoteForm = () => {
+const NoteView = () => {
   const { createNote, loading, error } = useCreateNote();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
   const user = JSON.parse(localStorage.getItem("user"));
   const userId = jwtDecode(user.token)._id;
+  const noteTitle = title.trim() === "" ? "New Note" : title;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const newNote = await createNote(title, content, userId);
+    const newNote = await createNote(noteTitle, content, userId);
 
     if (newNote) {
       setTitle("");
@@ -23,8 +24,7 @@ const NoteForm = () => {
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
-        <h1>New Note</h1>
+      <form onSubmit={handleSubmit} className="w-full bg-blue-500">
         <div>
           <label>Title:</label>
           <input
@@ -32,7 +32,6 @@ const NoteForm = () => {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="Enter title here"
-            required
           />
         </div>
         <div>
@@ -41,7 +40,6 @@ const NoteForm = () => {
             value={content}
             onChange={(e) => setContent(e.target.value)}
             placeholder="Enter content"
-            required
           ></textarea>
         </div>
         <button type="submit" disabled={loading}>
@@ -52,4 +50,4 @@ const NoteForm = () => {
   );
 };
 
-export default NoteForm;
+export default NoteView;

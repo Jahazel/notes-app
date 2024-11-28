@@ -24,18 +24,23 @@ const Nav = () => {
   return (
     <>
       {isAuthPage ? (
-        <div className="bg-white flex justify-between px-6 py-6 drop-shadow">
+        <div className="bg-white flex justify-between px-6 h-14 items-center drop-shadow">
           <h2
-            className="text-xl font-medium cursor-pointer"
+            className="text-lg font-medium cursor-pointer"
             onClick={handleLogoClick}
           >
             Notes App
           </h2>
         </div>
       ) : (
-        <div className="bg-white flex justify-between px-6 py-4 drop-shadow">
-          <h2 className="text-xl font-medium">Notes App</h2>
-          {user ? <button onClick={handleClick}>Logout</button> : null}
+        <div className="bg-white flex justify-between px-6 h-14 items-center drop-shadow">
+          <h2 className="text-lg font-medium">Notes App</h2>
+          <div>
+            <button className="p-2 mr-7 bg-blue-500 text-white rounded">
+              New Note +
+            </button>
+            {user ? <button onClick={handleClick}>Logout</button> : null}
+          </div>
         </div>
       )}
     </>
