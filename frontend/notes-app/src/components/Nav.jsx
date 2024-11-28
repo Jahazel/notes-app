@@ -33,7 +33,7 @@ const Nav = () => {
           </h2>
         </div>
       ) : (
-        <div className="bg-white flex justify-between px-6 py-6 drop-shadow">
+        <div className="bg-white flex justify-between px-6 py-4 drop-shadow">
           <h2 className="text-xl font-medium">Notes App</h2>
           {user ? <button onClick={handleClick}>Logout</button> : null}
         </div>
