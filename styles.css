@@ -1,0 +1,62 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+header {
+  height: 4rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid grey;
+  padding-right: 1rem;
+  padding-left: 1rem;
+}
+
+.container {
+  display: flex;
+  width: 100%;
+  flex: 1;
+}
+
+.notes-sidebar {
+  height: 100%;
+  width: 15%;
+  border-right: 2px solid grey;
+}
+
+.no-notes {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.note-input-container {
+  height: 100%;
+  width: 85%;
+}
+
+textarea {
+  display: none;
+  height: 100%;
+  width: 100%;
+  border: none;
+  outline: none;
+  padding: 2rem;
+}
+
+.note-div {
+  margin: 2rem;
+  display: flex;
+  justify-content: center;
+}
