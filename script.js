@@ -29,7 +29,7 @@ function createNote() {
   noteStorage = JSON.parse(localStorage.getItem("notes"));
 }
 
-function displayNotes() {
+function displayNotesSidebar() {
   let noteStorage = JSON.parse(localStorage.getItem("notes"));
   noteSidebar.innerHTML = "";
 
@@ -53,30 +53,41 @@ function displayNotes() {
       pElement.textContent = "New Note";
       noteDiv.id = id;
       textArea.value = input;
+
+      noteDiv.addEventListener("click", () => {
+        // console.log("Clicked noteDiv.id:", noteDiv.id);
+        localStorage.setItem("currentNoteId", noteDiv.id);
+        currentNoteId = localStorage.getItem("currentNoteId") || "";
+        displayValue();
+      });
     });
     textArea.style.display = "block";
   }
 }
-displayNotes();
+displayNotesSidebar();
 
 function updateNote(input) {
   let currentNote = noteStorage.find((note) => note.id === currentNoteId);
-  console.log(currentNote);
 
   currentNote.input = input;
-
   localStorage.setItem("notes", JSON.stringify(noteStorage));
+}
+
+function displayValue() {
+  let currentNoteInput = noteStorage.find(
+    (note) => note.id === currentNoteId,
+  ).input;
+
+  textArea.value = currentNoteInput;
 }
 
 btn.addEventListener("click", () => {
   createNote();
-  displayNotes();
+  displayNotesSidebar();
 });
 
 textArea.addEventListener("input", () => {
   updateNote(textArea.value);
-  console.log(noteStorage);
-  console.log(currentNoteId);
 });
-
+console.log(noteStorage);
 // localStorage.clear();
