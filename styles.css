@@ -11,6 +11,8 @@ body {
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f5f5f5;
 }
 
 header {
@@ -18,9 +20,37 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 2px solid grey;
-  padding-right: 1rem;
-  padding-left: 1rem;
+  border-bottom: 1px solid #e0e0e0;
+  padding-right: 2rem;
+  padding-left: 2rem;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+header h1 {
+  font-size: 1.5rem;
+  color: #333;
+  font-weight: 600;
+}
+
+#btn {
+  padding: 0.75rem 1.5rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  font-weight: 500;
+}
+
+#btn:hover {
+  background-color: #0056b3;
+}
+
+#btn:active {
+  background-color: #003d82;
 }
 
 .container {
@@ -32,13 +62,16 @@ header {
 .notes-sidebar {
   height: 100%;
   width: 15%;
-  border-right: 2px solid grey;
+  border-right: 1px solid #e0e0e0;
+  background-color: #fff;
 }
 
 .no-notes {
   display: flex;
   justify-content: center;
   align-items: center;
+  color: #999;
+  font-size: 1.1rem;
 }
 
 .note-input-container {
@@ -53,10 +86,33 @@ textarea {
   border: none;
   outline: none;
   padding: 2rem;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  resize: none;
+  background-color: #fff;
+  color: #333;
+}
+
+textarea:focus {
+  background-color: #fafafa;
+  border-bottom: 2px solid #007bff;
+}
+
+textarea::placeholder {
+  color: #999;
+  font-style: italic;
 }
 
 .note-div {
-  margin: 2rem;
+  padding: 1.5rem 1rem;
   display: flex;
   justify-content: center;
+  border-bottom: 1px solid #e0e0e0;
+  transition: background-color 0.2s;
+}
+
+.note-div:hover {
+  background-color: #f9f9f9;
+  cursor: pointer;
 }

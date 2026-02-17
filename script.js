@@ -55,7 +55,6 @@ function displayNotesSidebar() {
       textArea.value = input;
 
       noteDiv.addEventListener("click", () => {
-        // console.log("Clicked noteDiv.id:", noteDiv.id);
         localStorage.setItem("currentNoteId", noteDiv.id);
         currentNoteId = localStorage.getItem("currentNoteId") || "";
         displayValue();
@@ -89,5 +88,4 @@ btn.addEventListener("click", () => {
 textArea.addEventListener("input", () => {
   updateNote(textArea.value);
 });
-console.log(noteStorage);
 // localStorage.clear();
