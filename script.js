@@ -2,11 +2,12 @@ const textArea = document.getElementById("text-area");
 const btn = document.getElementById("btn");
 const noteSidebar = document.querySelector(".notes-sidebar");
 let noteStorage = JSON.parse(localStorage.getItem("notes"));
-let currentNoteId = "";
+let currentNoteId = localStorage.getItem("currentNoteId") || "";
 
 function createNote() {
   let uniqueId = String(Date.now());
   currentNoteId = uniqueId;
+  localStorage.setItem("currentNoteId", currentNoteId);
 
   if (!noteStorage) {
     let notesArray = [];
@@ -60,6 +61,8 @@ displayNotes();
 
 function updateNote(input) {
   let currentNote = noteStorage.find((note) => note.id === currentNoteId);
+  console.log(currentNote);
+
   currentNote.input = input;
 
   localStorage.setItem("notes", JSON.stringify(noteStorage));
@@ -73,6 +76,7 @@ btn.addEventListener("click", () => {
 textArea.addEventListener("input", () => {
   updateNote(textArea.value);
   console.log(noteStorage);
+  console.log(currentNoteId);
 });
 
 // localStorage.clear();
