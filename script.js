@@ -1,7 +1,7 @@
 const textArea = document.getElementById("text-area");
 const btn = document.getElementById("btn");
-const noteStorage = JSON.parse(localStorage.getItem("notes"));
 const noteSidebar = document.querySelector(".notes-sidebar");
+let noteStorage = JSON.parse(localStorage.getItem("notes"));
 let currentNoteId = "";
 
 function createNote() {
@@ -14,38 +14,47 @@ function createNote() {
       id: uniqueId,
       input: "",
     });
+
     localStorage.setItem("notes", JSON.stringify(notesArray));
+  } else if (noteStorage !== null) {
+    noteStorage.push({
+      id: uniqueId,
+      input: "",
+    });
+
+    localStorage.setItem("notes", JSON.stringify(noteStorage));
   }
 
-  noteStorage.push({
-    id: uniqueId,
-    input: "",
-  });
-  localStorage.setItem("notes", JSON.stringify(noteStorage));
+  noteStorage = JSON.parse(localStorage.getItem("notes"));
 }
 
 function displayNotes() {
-  const sidebarH1 = noteSidebar.querySelector("h1");
+  let noteStorage = JSON.parse(localStorage.getItem("notes"));
+  noteSidebar.innerHTML = "";
 
-  if (noteSidebar.classList.contains("no-notes")) {
-    noteSidebar.classList.remove("no-notes");
-    noteSidebar.removeChild(sidebarH1);
+  if (!noteStorage) {
+    const h1Element = document.createElement("h1");
+    h1Element.textContent = "No Notes";
+    noteSidebar.appendChild(h1Element);
   }
+
+  if (noteStorage && noteSidebar.classList.contains("no-notes")) {
+    noteSidebar.classList.remove("no-notes");
+  }
+
   if (noteStorage) {
     noteStorage.forEach(({ id, input }) => {
       const noteDiv = document.createElement("div");
       const pElement = document.createElement("p");
       noteSidebar.appendChild(noteDiv);
       noteDiv.appendChild(pElement);
-
       noteDiv.classList.add("note-div");
       pElement.textContent = "New Note";
       noteDiv.id = id;
       textArea.value = input;
     });
+    textArea.style.display = "block";
   }
-
-  textArea.style.display = "block";
 }
 displayNotes();
 
@@ -54,14 +63,16 @@ function updateNote(input) {
   currentNote.input = input;
 
   localStorage.setItem("notes", JSON.stringify(noteStorage));
-  console.log(JSON.parse(localStorage.getItem("notes")));
 }
 
 btn.addEventListener("click", () => {
-  noteSidebar.innerHTML = "";
   createNote();
   displayNotes();
+});
+
+textArea.addEventListener("input", () => {
+  updateNote(textArea.value);
   console.log(noteStorage);
 });
 
-textArea.addEventListener("input", () => updateNote(textArea.value));
+// localStorage.clear();
