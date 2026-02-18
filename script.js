@@ -1,6 +1,7 @@
 const textArea = document.getElementById("text-area");
 const btn = document.getElementById("btn");
 const noteSidebar = document.querySelector(".notes-sidebar");
+const deleteBtn = document.getElementById("delete-btn");
 let noteStorage = JSON.parse(localStorage.getItem("notes"));
 let currentNoteId = localStorage.getItem("currentNoteId") || "";
 
@@ -74,6 +75,15 @@ function displayNotesSidebar() {
         displayValue();
       });
     });
+  }
+  if (noteStorage.length === 0) {
+    const h1Element = document.createElement("h1");
+
+    noteSidebar.classList.add("no-notes");
+    h1Element.textContent = "No Notes";
+    noteSidebar.appendChild(h1Element);
+    textArea.style.display = "none";
+  } else {
     textArea.style.display = "block";
   }
 }
@@ -94,6 +104,33 @@ function displayValue() {
   textArea.value = currentNoteInput;
 }
 
+function deleteNote() {
+  let indexTodelete = noteStorage.findIndex(({ id }) => id === currentNoteId);
+  let divToDelete = document.getElementById(currentNoteId);
+
+  if (noteStorage.length != 0) {
+    noteStorage.splice(indexTodelete, 1);
+    localStorage.setItem("notes", JSON.stringify(noteStorage));
+    divToDelete.remove();
+  }
+
+  if (noteStorage.length === 0) {
+    if (!noteSidebar.classList.contains("no-notes")) {
+      const h1Element = document.createElement("h1");
+
+      noteSidebar.classList.add("no-notes");
+      h1Element.textContent = "No Notes";
+      noteSidebar.appendChild(h1Element);
+    }
+
+    textArea.style.display = "none";
+  } else if (noteStorage.length >= 1) {
+    textArea.value = noteStorage[noteStorage.length - 1].input;
+    currentNoteId = noteStorage[noteStorage.length - 1].id;
+    displayNotesSidebar();
+  }
+}
+
 btn.addEventListener("click", () => {
   createNote();
   displayNotesSidebar();
@@ -103,4 +140,7 @@ textArea.addEventListener("input", () => {
   updateNote(textArea.value);
 });
 
+deleteBtn.addEventListener("click", () => {
+  deleteNote();
+});
 // localStorage.clear();
