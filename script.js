@@ -44,7 +44,9 @@ function displayNotesSidebar() {
   }
 
   if (noteStorage) {
-    noteStorage.forEach(({ id, input }) => {
+    let arrayCopy = [...noteStorage].reverse();
+
+    arrayCopy.forEach(({ id, input }) => {
       const noteDiv = document.createElement("div");
       const pElement = document.createElement("p");
       noteSidebar.appendChild(noteDiv);
@@ -52,10 +54,10 @@ function displayNotesSidebar() {
       noteDiv.classList.add("note-div");
       pElement.textContent = "New Note";
       noteDiv.id = id;
-      textArea.value = input;
 
       if (currentNoteId === id) {
         noteDiv.classList.add("active");
+        textArea.value = input;
       }
 
       noteDiv.addEventListener("click", () => {
