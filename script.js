@@ -14,6 +14,7 @@ function createNote() {
     let notesArray = [];
     notesArray.push({
       id: uniqueId,
+      title: "",
       input: "",
     });
 
@@ -21,6 +22,7 @@ function createNote() {
   } else if (noteStorage !== null) {
     noteStorage.push({
       id: uniqueId,
+      title: "",
       input: "",
     });
 
@@ -31,7 +33,7 @@ function createNote() {
 }
 
 function displayNotesSidebar() {
-  let noteStorage = JSON.parse(localStorage.getItem("notes"));
+  noteStorage = JSON.parse(localStorage.getItem("notes"));
   noteSidebar.innerHTML = "";
 
   if (!noteStorage) {
@@ -47,19 +49,38 @@ function displayNotesSidebar() {
   if (noteStorage) {
     let arrayCopy = [...noteStorage].reverse();
 
-    arrayCopy.forEach(({ id, input }) => {
+    arrayCopy.forEach(({ id, input, title }) => {
       const noteDiv = document.createElement("div");
       const pElement = document.createElement("p");
       noteSidebar.appendChild(noteDiv);
       noteDiv.appendChild(pElement);
       noteDiv.classList.add("note-div");
-      pElement.textContent = "New Note";
+      pElement.classList.add("title");
+      pElement.textContent = title || "Untitled";
       noteDiv.id = id;
 
       if (currentNoteId === id) {
         noteDiv.classList.add("active");
         textArea.value = input;
       }
+
+      pElement.addEventListener("dblclick", () => {
+        const inputElement = document.createElement("input");
+
+        inputElement.classList.add("input-element");
+        noteDiv.replaceChild(inputElement, pElement);
+
+        inputElement.addEventListener("blur", () => {
+          let title = inputElement.value;
+          pElement.textContent = title;
+          noteDiv.replaceChild(pElement, inputElement);
+
+          let currentNote = noteStorage.find((note) => note.id === id);
+
+          currentNote.title = title;
+          localStorage.setItem("notes", JSON.stringify(noteStorage));
+        });
+      });
 
       noteDiv.addEventListener("click", () => {
         localStorage.setItem("currentNoteId", noteDiv.id);
@@ -143,4 +164,3 @@ textArea.addEventListener("input", () => {
 deleteBtn.addEventListener("click", () => {
   deleteNote();
 });
-// localStorage.clear();
