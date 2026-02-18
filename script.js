@@ -64,15 +64,16 @@ function displayNotesSidebar() {
         textArea.value = input;
       }
 
-      pElement.addEventListener("dblclick", () => {
+      pElement.addEventListener("click", () => {
         const inputElement = document.createElement("input");
 
         inputElement.classList.add("input-element");
         noteDiv.replaceChild(inputElement, pElement);
+        inputElement.placeholder = "Enter title...";
 
         inputElement.addEventListener("blur", () => {
           let title = inputElement.value;
-          pElement.textContent = title;
+          pElement.textContent = title || "Untitled";
           noteDiv.replaceChild(pElement, inputElement);
 
           let currentNote = noteStorage.find((note) => note.id === id);

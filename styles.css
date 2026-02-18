@@ -94,6 +94,16 @@ header h1 {
   font-size: 0.7rem;
 }
 
+.input-element {
+  border: none;
+  outline: none;
+  background-color: #f0f0f0;
+  font-family: inherit;
+  font-size: inherit;
+
+  width: 100%;
+}
+
 .note-input-container {
   height: 100%;
   width: 85%;
