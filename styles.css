@@ -71,7 +71,7 @@ header h1 {
   justify-content: center;
   align-items: center;
   color: #999;
-  font-size: 1.1rem;
+  font-size: 0.7rem;
 }
 
 .note-input-container {
@@ -115,4 +115,9 @@ textarea::placeholder {
 .note-div:hover {
   background-color: #f9f9f9;
   cursor: pointer;
+}
+
+.note-div.active {
+  background-color: #f0f0f0;
+  border-left: 4px solid #007bff;
 }

@@ -54,9 +54,21 @@ function displayNotesSidebar() {
       noteDiv.id = id;
       textArea.value = input;
 
+      if (currentNoteId === id) {
+        noteDiv.classList.add("active");
+      }
+
       noteDiv.addEventListener("click", () => {
         localStorage.setItem("currentNoteId", noteDiv.id);
         currentNoteId = localStorage.getItem("currentNoteId") || "";
+
+        document.querySelectorAll(".note-div").forEach((div) => {
+          if (div.classList.contains("active")) {
+            div.classList.remove("active");
+          }
+        });
+
+        noteDiv.classList.add("active");
         displayValue();
       });
     });
@@ -88,4 +100,5 @@ btn.addEventListener("click", () => {
 textArea.addEventListener("input", () => {
   updateNote(textArea.value);
 });
+
 // localStorage.clear();
