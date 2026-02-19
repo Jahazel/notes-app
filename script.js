@@ -2,6 +2,8 @@ const textArea = document.getElementById("text-area");
 const btn = document.getElementById("btn");
 const noteSidebar = document.querySelector(".notes-sidebar");
 const deleteBtn = document.getElementById("delete-btn");
+const backBtn = document.getElementById("back-btn");
+const h1 = document.getElementById(logo);
 let noteStorage = JSON.parse(localStorage.getItem("notes"));
 let currentNoteId = localStorage.getItem("currentNoteId") || "";
 
@@ -96,6 +98,12 @@ function displayNotesSidebar() {
 
         noteDiv.classList.add("active");
         displayValue();
+
+        // if (window.innerWidth <= 480) {
+        //   backBtn.style.display = "block";
+        //   noteSidebar.style.display = "none";
+        //   textArea.style.display = "block";
+        // }
       });
     });
   }
@@ -154,6 +162,20 @@ function deleteNote() {
   }
 }
 
+// function handleScreenSize() {
+//   if (window.innerWidth <= 480) {
+//     backBtn.style.display = "none";
+//     noteSidebar.style.display = "block";
+//     textArea.style.display = "none";
+//   } else {
+//     backBtn.style.display = "block";
+//     noteSidebar.style.display = "block";
+//   }
+// }
+// handleScreenSize();
+
+// window.addEventListener("resize", handleScreenSize);
+
 btn.addEventListener("click", () => {
   createNote();
   displayNotesSidebar();
@@ -166,3 +188,10 @@ textArea.addEventListener("input", () => {
 deleteBtn.addEventListener("click", () => {
   deleteNote();
 });
+
+// backBtn.addEventListener("click", () => {
+//   backBtn.style.display = "none";
+//   noteSidebar.style.display = "block";
+//   noteSidebar.style.height = "100%vh";
+//   textArea.style.display = "hidden";
+// });
