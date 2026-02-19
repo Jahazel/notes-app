@@ -70,8 +70,9 @@ function displayNotesSidebar() {
         inputElement.classList.add("input-element");
         noteDiv.replaceChild(inputElement, pElement);
         inputElement.placeholder = "Enter title...";
+        inputElement.focus();
 
-        inputElement.addEventListener("blur", () => {
+        inputElement.addEventListener("focusout", () => {
           let title = inputElement.value;
           pElement.textContent = title || "Untitled";
           noteDiv.replaceChild(pElement, inputElement);
