@@ -109,14 +109,14 @@ function displayNotesSidebar() {
       });
     });
   }
-  if (noteStorage.length === 0) {
+  if (noteStorage && noteStorage.length === 0) {
     const h1Element = document.createElement("h1");
 
     noteSidebar.classList.add("no-notes");
     h1Element.textContent = "No Notes";
     noteSidebar.appendChild(h1Element);
     textArea.style.display = "none";
-  } else {
+  } else if (noteStorage) {
     textArea.style.display = "block";
   }
 }
