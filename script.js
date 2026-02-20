@@ -1,9 +1,10 @@
 const textArea = document.getElementById("text-area");
+const noteInputContainer = document.querySelector(".note-input-container");
 const btn = document.getElementById("btn");
 const noteSidebar = document.querySelector(".notes-sidebar");
 const deleteBtn = document.getElementById("delete-btn");
 const backBtn = document.getElementById("back-btn");
-const h1 = document.getElementById(logo);
+const logo = document.getElementById("logo");
 let noteStorage = JSON.parse(localStorage.getItem("notes"));
 let currentNoteId = localStorage.getItem("currentNoteId") || "";
 
@@ -99,11 +100,12 @@ function displayNotesSidebar() {
         noteDiv.classList.add("active");
         displayValue();
 
-        // if (window.innerWidth <= 480) {
-        //   backBtn.style.display = "block";
-        //   noteSidebar.style.display = "none";
-        //   textArea.style.display = "block";
-        // }
+        if (window.innerWidth <= 480) {
+          noteInputContainer.style.display = "block";
+          noteSidebar.style.display = "none";
+          backBtn.style.display = "block";
+          logo.style.display = "none";
+        }
       });
     });
   }
@@ -162,23 +164,29 @@ function deleteNote() {
   }
 }
 
-// function handleScreenSize() {
-//   if (window.innerWidth <= 480) {
-//     backBtn.style.display = "none";
-//     noteSidebar.style.display = "block";
-//     textArea.style.display = "none";
-//   } else {
-//     backBtn.style.display = "block";
-//     noteSidebar.style.display = "block";
-//   }
-// }
-// handleScreenSize();
+function handleScreenSize() {
+  if (window.innerWidth <= 480) {
+    noteInputContainer.style.display = "none";
+    noteSidebar.display = "block";
 
-// window.addEventListener("resize", handleScreenSize);
+    document.querySelectorAll(".note-div").forEach((div) => {
+      div.classList.remove("active");
+    });
+  }
+}
+handleScreenSize();
+
+window.addEventListener("resize", handleScreenSize);
 
 btn.addEventListener("click", () => {
   createNote();
   displayNotesSidebar();
+
+  if (window.innerWidth <= 480) {
+    document.querySelectorAll(".note-div").forEach((div) => {
+      div.classList.remove("active");
+    });
+  }
 });
 
 textArea.addEventListener("input", () => {
@@ -187,11 +195,21 @@ textArea.addEventListener("input", () => {
 
 deleteBtn.addEventListener("click", () => {
   deleteNote();
+
+  if (window.innerWidth <= 480) {
+    document.querySelectorAll(".note-div").forEach((div) => {
+      div.classList.remove("active");
+    });
+  }
 });
 
-// backBtn.addEventListener("click", () => {
-//   backBtn.style.display = "none";
-//   noteSidebar.style.display = "block";
-//   noteSidebar.style.height = "100%vh";
-//   textArea.style.display = "hidden";
-// });
+backBtn.addEventListener("click", () => {
+  noteInputContainer.style.display = "none";
+  backBtn.style.display = "none";
+  logo.style.display = "block";
+  noteSidebar.style.display = "block";
+
+  document.querySelectorAll(".note-div").forEach((div) => {
+    div.classList.remove("active");
+  });
+});
